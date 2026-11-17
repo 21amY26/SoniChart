@@ -1,0 +1,18 @@
+ok   braille letters
+ok   braille capital sign
+ok   braille numbers use number sign
+ok   braille decimal vs full stop
+ok   braille ascii for brf
+ok   pitch is monotonic and bounded
+ok   pan spans left to right
+ok   trend: temperature peaks then falls
+ok   trend: stock increases
+ok   summary names extremes
+ok   point description includes delta
+ok   tactile svg is A4 with braille labels
+ok   brf lines are at most 40 cells
+ok   vibration pattern length
+ok   csv parsing skips header
+ok   study answers match sample data
+
+16 tests passed

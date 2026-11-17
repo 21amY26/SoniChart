@@ -9,7 +9,7 @@
     s: [2, 3, 4], t: [2, 3, 4, 5], u: [1, 3, 6], v: [1, 2, 3, 6], w: [2, 4, 5, 6],
     x: [1, 3, 4, 6], y: [1, 3, 4, 5, 6], z: [1, 3, 5, 6]
   };
-  const PUNCT_DOTS = { ',': [2], '.': [2, 5, 6], '-': [3, 6], ':': [2, 5] };
+  const PUNCT_DOTS = { ',': [2], '.': [2, 5, 6], '-': [3, 6], ':': [2, 5], ';': [2, 3] };
   const NUMBER_SIGN = [3, 4, 5, 6];
   const CAPITAL_SIGN = [6];
   const DIGIT_TO_LETTER = '0123456789'.split('').reduce((m, d) => {
@@ -28,13 +28,14 @@
   function toCells(text) {
     const cells = [];
     let inNumber = false;
-    for (const ch of String(text)) {
+    const chars = Array.from(String(text));
+    chars.forEach((ch, idx) => {
       if (/[0-9]/.test(ch)) {
         if (!inNumber) { cells.push(cell(NUMBER_SIGN)); inNumber = true; }
         cells.push(cell(LETTER_DOTS[DIGIT_TO_LETTER[ch]]));
-        continue;
+        return;
       }
-      if (ch === '.' && inNumber) { cells.push(cell([4, 6])); continue; } // decimal point
+      if (ch === '.' && inNumber && /[0-9]/.test(chars[idx + 1] || '')) { cells.push(cell([4, 6])); return; } // decimal point
       inNumber = false;
       const lower = ch.toLowerCase();
       if (LETTER_DOTS[lower]) {
@@ -47,7 +48,7 @@
       } else {
         cells.push(0); // space and unsupported characters
       }
-    }
+    });
     return cells;
   }
 

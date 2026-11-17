@@ -16,6 +16,10 @@ function test(name, fn) {
 test('braille letters', () => assert.strictEqual(Braille.toUnicode('abc'), '⠁⠃⠉'));
 test('braille capital sign', () => assert.strictEqual(Braille.toUnicode('Jan'), '⠠⠚⠁⠝'));
 test('braille numbers use number sign', () => assert.strictEqual(Braille.toUnicode('25'), '⠼⠃⠑'));
+test('braille decimal vs full stop', () => {
+  assert.strictEqual(Braille.toAscii('2.5'), '#B.E');
+  assert.strictEqual(Braille.toAscii('q4.'), 'Q#D4');
+});
 test('braille ascii for brf', () => assert.strictEqual(Braille.toAscii('may 33'), 'MAY #CC'));
 
 test('pitch is monotonic and bounded', () => {

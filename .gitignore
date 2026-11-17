@@ -1,2 +1,5 @@
 .claude/
 .DS_Store
+report/_render/*.pdf
+report/_render/*.json
+~$*

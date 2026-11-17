@@ -57,9 +57,15 @@
     ds.data.forEach(d => lines.push(`${d[0]}: ${Describe.fmt(d[1])}`));
     const out = [];
     for (const line of lines) {
-      const cells = Braille.toAscii(line);
-      if (!cells) { out.push(''); continue; }
-      for (let i = 0; i < cells.length; i += 40) out.push(cells.slice(i, i + 40));
+      // Wrap at word boundaries; words longer than a line are split.
+      let current = '';
+      for (const word of line.split(' ').map(w => Braille.toAscii(w))) {
+        if (current && current.length + 1 + word.length > 40) { out.push(current); current = ''; }
+        let w = word;
+        while (w.length > 40) { out.push(w.slice(0, 40)); w = w.slice(40); }
+        current = current ? `${current} ${w}` : w;
+      }
+      out.push(current);
     }
     const pages = [];
     for (let i = 0; i < out.length; i += 25) pages.push(out.slice(i, i + 25).join('\r\n'));
