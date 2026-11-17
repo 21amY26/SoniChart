@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SoniChart — Accessible Data Visualisation</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#chart-region">Skip to chart</a>
+  <header>
+    <h1>SoniChart</h1>
+    <p class="tagline">Charts you can hear, read and touch.</p>
+  </header>
+
+  <main>
+    <section aria-labelledby="data-heading" class="panel">
+      <h2 id="data-heading">1. Choose data</h2>
+      <div class="row">
+        <label for="dataset">Sample dataset</label>
+        <select id="dataset"></select>
+      </div>
+      <div class="row">
+        <label for="csv-file">Or load a CSV (label,value per line)</label>
+        <input type="file" id="csv-file" accept=".csv,text/csv">
+      </div>
+      <div class="row">
+        <label for="chart-type">Chart type</label>
+        <select id="chart-type">
+          <option value="line">Line chart</option>
+          <option value="bar">Bar chart</option>
+        </select>
+      </div>
+    </section>
+
+    <section aria-labelledby="chart-heading" class="panel">
+      <h2 id="chart-heading">2. Explore the chart</h2>
+      <p id="chart-summary" class="summary"></p>
+      <div id="chart-region" tabindex="0" role="application"
+           aria-roledescription="interactive chart"
+           aria-describedby="chart-summary keyboard-help">
+        <svg id="chart" aria-hidden="true"></svg>
+      </div>
+      <details id="keyboard-help-wrap">
+        <summary>Keyboard shortcuts</summary>
+        <ul id="keyboard-help">
+          <li><kbd>←</kbd>/<kbd>→</kbd> move between data points (each point plays a tone)</li>
+          <li><kbd>Home</kbd>/<kbd>End</kbd> first / last point</li>
+          <li><kbd>Space</kbd> play the whole series as sound</li>
+          <li><kbd>S</kbd> speak summary &nbsp; <kbd>T</kbd> speak trend</li>
+          <li><kbd>H</kbd> jump to highest &nbsp; <kbd>L</kbd> jump to lowest</li>
+          <li><kbd>Esc</kbd> stop sound</li>
+        </ul>
+      </details>
+      <div class="row buttons">
+        <button id="play-btn">Play sonification</button>
+        <button id="stop-btn">Stop</button>
+        <label for="speed">Speed</label>
+        <input id="speed" type="range" min="100" max="800" step="50" value="300"
+               aria-valuetext="300 milliseconds per point">
+      </div>
+      <p id="live" class="sr-status" aria-live="polite" aria-atomic="true"></p>
+    </section>
+
+    <section aria-labelledby="tactile-heading" class="panel">
+      <h2 id="tactile-heading">3. Tactile output</h2>
+      <p>Export a high-contrast graphic with Braille labels, sized for swell (microcapsule)
+        paper or an embosser, or a Braille text summary (.brf).</p>
+      <div class="row buttons">
+        <button id="tactile-svg-btn">Download tactile SVG</button>
+        <button id="brf-btn">Download Braille summary (.brf)</button>
+        <button id="vibrate-btn">Haptic preview (mobile)</button>
+      </div>
+    </section>
+
+    <section aria-labelledby="table-heading" class="panel">
+      <h2 id="table-heading">4. Data table</h2>
+      <table id="data-table"><caption></caption><thead><tr><th scope="col">Label</th><th scope="col">Value</th></tr></thead><tbody></tbody></table>
+    </section>
+
+    <section aria-labelledby="study-heading" class="panel">
+      <h2 id="study-heading">5. User study mode</h2>
+      <p>For the researcher: run the evaluation tasks and record timings and answers.</p>
+      <div class="row">
+        <label for="pid">Participant ID</label><input id="pid" value="P01">
+        <label for="condition">Condition</label>
+        <select id="condition">
+          <option value="table">Data table only (baseline)</option>
+          <option value="sonify">Sonification + speech</option>
+          <option value="tactile">Tactile graphic</option>
+        </select>
+      </div>
+      <div class="row buttons">
+        <button id="study-start">Start next task</button>
+        <button id="study-export">Export log (CSV)</button>
+      </div>
+      <p id="study-task" aria-live="assertive"></p>
+      <div class="row" id="answer-row" hidden>
+        <label for="answer">Answer</label><input id="answer">
+        <button id="answer-submit">Submit answer</button>
+      </div>
+      <p id="study-count"></p>
+    </section>
+  </main>
+  <footer><p>SoniChart — HCI course project.</p></footer>
+
+  <script src="js/braille.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/describe.js"></script>
+  <script src="js/chart.js"></script>
+  <script src="js/sonify.js"></script>
+  <script src="js/tactile.js"></script>
+  <script src="js/study.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
